@@ -164,12 +164,6 @@ export default function App() {
           <path d="M29 566 H121 V624 H29Z" fill="#e8d2b5" strokeWidth="2"/>
           <path d="M37 580 H112 M37 592 H112" fill="none" stroke="#9b7655" strokeWidth="2"/>
           <path d="M30 650 V674 M120 650 V674" fill="none" strokeWidth="8"/>
-          <path d="M1460 612 Q1460 575 1505 566 Q1550 557 1570 592 L1570 696 H1460Z" fill="#b8c8b6" strokeWidth="5"/>
-          <path d="M1475 608 Q1475 585 1337 582 Q1370 580 1555 608 V665 H1475Z" fill="#e0e8dc" strokeWidth="3"/>
-          <path d="M1460 666 Q1520 647 1570 666 V724 H1460Z" fill="#9fb39b" strokeWidth="5"/>
-          <path d="M1475 724 V760 M1555 724 V760" fill="none" strokeWidth="9"/>
-          <path d="M1467 760 H1485 M1534 760 H1555" fill="none" strokeWidth="4"/>
-          <path d="M1488 566 Q1520 531 1542 566" fill="none" stroke="#879b83" strokeWidth="3"/>
         </g>
 
       </svg>

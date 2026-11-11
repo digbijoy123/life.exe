@@ -143,7 +143,7 @@ export default function App() {
         {/* Small skirting board and hand-inked floor detail */}
         <path d="M0 625 Q360 619 720 625 T1440 625" fill="none" stroke="#171717" strokeWidth="4"/>
         <path d="M0 633 Q360 627 720 633 T1440 633" fill="none" stroke="#c6beb2" strokeWidth="2"/>
-      </svg></svg>
+      </svg>
       <div className="environment-caption">BEDROOM · ENVIRONMENT DESIGN</div>
     </main>
   )

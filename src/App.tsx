@@ -1,7 +1,140 @@
+import { useEffect, useRef, useState } from 'react'
+import { gsap } from 'gsap'
+import { Volume2, VolumeX, RotateCcw, MousePointer2, Sparkles, MapPin, X } from 'lucide-react'
+import Stickman from './components/Stickman'
+import { bedroomObjects, scenes, type SceneId } from './data/scenes'
+
+const lines: Record<string, string[]> = {
+  lamp: ['Who turned that on? It was peaceful two seconds ago.', 'I was enjoying the dark. Thanks.', 'I am going to unscrew that bulb.'],
+  alarm: ['That alarm is not supposed to ring yet!', 'I heard it. I heard it. Please stop.', 'I am throwing this clock out the window.'],
+  bed: ['HEY! I was comfortable!', 'The mattress has done nothing to you.', 'I am holding on to the bed frame.'],
+  window: ['A breeze? At this hour?', 'Close that. CLOSE THAT.', 'You are paying my heating bill.'],
+  curtains: ['Sunlight. My only weakness.', 'I liked it better when it was dark.', 'Stop rearranging my circadian rhythm.'],
+  pillow: ['My pillow! Give it back.', 'That is not a toy!', 'I am sleeping on your keyboard tonight.'],
+  blanket: ['It is cold! Put that back!', 'I was under there!', 'This is a blanket-related crime.'],
+  fan: ['Could you not change the fan speed?', 'I am either freezing or melting.', 'I will unplug it. I mean it.'],
+  phone: ['Who keeps calling me?', 'If that is spam, I blame you.', 'I am putting you on silent.'],
+  door: ['Who is it? Nobody? Then why knock?', 'Stop knocking!', 'I am not opening that door.'],
+  mosquito: ['There is a mosquito in here!', 'I can hear it. I can FEEL it.', 'I am negotiating with an insect now.'],
+  clock: ['Time is an illusion. Apparently.', 'Why is the clock doing that?', 'You have officially broken time.'],
+}
+const sceneHotspots = [
+  {id:'curtains',x:8,y:12,w:23,h:43,label:'Curtains'},
+  {id:'window',x:13,y:17,w:18,h:32,label:'Window'},
+  {id:'clock',x:45,y:19,w:8,h:12,label:'Wall clock'},
+  {id:'fan',x:43,y:1,w:15,h:20,label:'Ceiling fan'},
+  {id:'alarm',x:14,y:52,w:7,h:9,label:'Alarm clock'},
+  {id:'lamp',x:13,y:46,w:10,h:13,label:'Bedside lamp'},
+  {id:'bed',x:29,y:47,w:38,h:36,label:'Bed frame'},
+  {id:'pillow',x:32,y:55,w:18,h:11,label:'Pillows'},
+  {id:'blanket',x:29,y:64,w:38,h:15,label:'Blanket'},
+  {id:'phone',x:70,y:61,w:5,h:9,label:'Phone'},
+  {id:'door',x:78,y:39,w:9,h:33,label:'Wardrobe / door'},
+  {id:'mosquito',x:54,y:40,w:8,h:9,label:'Mosquito'},
+]
 export default function App() {
+  const [intro,setIntro]=useState(true)
+  const [mood,setMood]=useState(0)
+  const [energy,setEnergy]=useState(82)
+  const [counts,setCounts]=useState<Record<string,number>>({})
+  const [dialogue,setDialogue]=useState('Psst. I can see your cursor. What are you planning?')
+  const [soundOn,setSoundOn]=useState(false)
+  const [showPlaces,setShowPlaces]=useState(false)
+  const [scene,setScene]=useState<SceneId>('bedroom')
+  const [cursorNear,setCursorNear]=useState(false)
+  const [pose,setPose]=useState('idle')
+  const [awake,setAwake]=useState(false)
+  const [fanSpeed,setFanSpeed]=useState(1)
+  const [lampOn,setLampOn]=useState(false)
+  const [windowOpen,setWindowOpen]=useState(false)
+  const [curtainsOpen,setCurtainsOpen]=useState(false)
+  const [clockShift,setClockShift]=useState(0)
+  const [blanketPulled,setBlanketPulled]=useState(false)
+  const [pillowMoved,setPillowMoved]=useState(false)
+  const [showHints,setShowHints]=useState(true)
+  const root=useRef<HTMLElement>(null)
+  const audio=useRef<AudioContext|null>(null)
+  const timeout=useRef<number|undefined>(undefined)
+  const level=Math.min(100,mood)
+  const moodName=level<18?'PEACEFUL':level<38?'CURIOUS':level<58?'ANNOYED':level<78?'FRUSTRATED':'FURIOUS'
+
+  useEffect(()=>{
+    const ctx=gsap.context(()=>{
+      gsap.to('.fan-blades',{rotation:360,transformOrigin:'0px 0px',duration:fanSpeed===0?0:Math.max(.35,2.8/fanSpeed),repeat:-1,ease:'none',paused:fanSpeed===0})
+      gsap.to('.left-lamp,.right-lamp',{y:-1.5,duration:2.8,repeat:-1,yoyo:true,ease:'sine.inOut',stagger:.35})
+      gsap.to('.curtain-left',{x:-3,duration:3.2,repeat:-1,yoyo:true,ease:'sine.inOut'})
+      gsap.to('.curtain-right',{x:3,duration:3.5,repeat:-1,yoyo:true,ease:'sine.inOut'})
+      gsap.to('.plant',{rotation:1.4,transformOrigin:'50% 100%',duration:2.5,repeat:-1,yoyo:true,ease:'sine.inOut'})
+      gsap.to('.wall-clock,.alarm-clock',{rotation:1.2,transformOrigin:'50% 50%',duration:2.2,repeat:-1,yoyo:true,ease:'sine.inOut'})
+      gsap.to('.wall-art',{y:-1.5,duration:4,repeat:-1,yoyo:true,ease:'sine.inOut'})
+      gsap.to('.phone-object',{y:-1,duration:1.5,repeat:-1,yoyo:true,ease:'sine.inOut'})
+      gsap.to('.mosquito-object',{x:12,y:-9,duration:.9,repeat:-1,yoyo:true,ease:'sine.inOut'})
+      gsap.to('.rug',{y:1,duration:4,repeat:-1,yoyo:true,ease:'sine.inOut'})
+      gsap.to('.bed-cover',{y:1.2,duration:3.4,repeat:-1,yoyo:true,ease:'sine.inOut'})
+      gsap.to('.pillows',{y:1,duration:3.1,repeat:-1,yoyo:true,ease:'sine.inOut'})
+      gsap.to('.wardrobe',{x:0,duration:3,repeat:-1,yoyo:true,ease:'sine.inOut'})
+    },root)
+    return ()=>ctx.revert()
+  },[fanSpeed])
+
+  useEffect(()=>{
+    const node=root.current
+    if(!node)return
+    const onMove=(e:MouseEvent)=>{const rect=node.getBoundingClientRect();const near=Math.abs(e.clientX-(rect.left+rect.width*.5))<160&&Math.abs(e.clientY-(rect.top+rect.height*.57))<180;setCursorNear(near)}
+    node.addEventListener('mousemove',onMove)
+    return ()=>node.removeEventListener('mousemove',onMove)
+  },[])
+  useEffect(()=>{const id=window.setInterval(()=>setEnergy(v=>Math.max(20,v-.25)),7000);return()=>window.clearInterval(id)},[])
+  useEffect(()=>()=>{if(timeout.current)window.clearTimeout(timeout.current);audio.current?.close()},[])
+  function sound(){
+    if(!soundOn)return
+    try{const AC=window.AudioContext||(window as typeof window & {webkitAudioContext?:typeof AudioContext}).webkitAudioContext;if(!AC)return;audio.current??=new AC();const osc=audio.current.createOscillator();const gain=audio.current.createGain();osc.connect(gain);gain.connect(audio.current.destination);osc.frequency.value=520;gain.gain.setValueAtTime(.08,audio.current.currentTime);gain.gain.exponentialRampToValueAtTime(.001,audio.current.currentTime+.18);osc.start();osc.stop(audio.current.currentTime+.18)}catch{}
+  }
+  function interact(id:string){
+    const next=(counts[id]||0)+1
+    setCounts(v=>({...v,[id]:next}))
+    setMood(v=>Math.min(100,v+(next===1?7:next===2?10:13)))
+    setEnergy(v=>Math.max(12,v-2))
+    setAwake(true)
+    setPose(id==='bed'?'startled':id==='fan'?'annoyed':'angry')
+    const options=lines[id]||['Seriously?']
+    setDialogue(options[Math.min(next-1,options.length-1)])
+    sound()
+    if(id==='lamp')setLampOn(v=>!v)
+    if(id==='window')setWindowOpen(v=>!v)
+    if(id==='curtains')setCurtainsOpen(v=>!v)
+    if(id==='fan')setFanSpeed(v=>(v+1)%4)
+    if(id==='alarm')setDialogue(next>1?'I AM AWAKE. THE WHOLE STREET IS AWAKE.':'BEEP BEEP BEEP. Happy now?')
+    if(id==='phone')setDialogue('BZZZT. BZZZT. It is probably you. It is always you.')
+    if(id==='door')setDialogue('KNOCK KNOCK. Who is there? YOUR WORST NIGHTMARE.')
+    if(id==='mosquito')setDialogue('I have made an enemy of something smaller than a pea.')
+    if(id==='clock')setClockShift(v=>v+1)
+    if(id==='pillow')setPillowMoved(v=>!v)
+    if(id==='blanket')setBlanketPulled(v=>!v)
+    if(id==='bed'&&root.current)gsap.fromTo(root.current.querySelector('.bed'),{x:-9},{x:9,duration:.08,repeat:7,yoyo:true,clearProps:'x'})
+    if(id==='alarm')gsap.fromTo(root.current?.querySelector('.alarm-clock'),{rotation:-12},{rotation:12,duration:.08,repeat:8,yoyo:true})
+    if(id==='phone')gsap.fromTo(root.current?.querySelector('.phone-object'),{rotation:-8},{rotation:8,duration:.09,repeat:8,yoyo:true})
+    if(id==='door')gsap.fromTo(root.current?.querySelector('.wardrobe'),{x:0},{x:-5,duration:.16,repeat:5,yoyo:true})
+    if(id==='mosquito')gsap.fromTo(root.current?.querySelector('.mosquito-object'),{scale:1},{scale:1.5,duration:.12,repeat:5,yoyo:true,transformOrigin:'center'})
+    if(timeout.current)window.clearTimeout(timeout.current)
+    timeout.current=window.setTimeout(()=>setPose('idle'),900)
+  }
+  function randomDisturb(){const ids=bedroomObjects.map(o=>o.id);interact(ids[Math.floor(Math.random()*ids.length)])}
+  function reset(){setMood(0);setEnergy(82);setCounts({});setDialogue('Peace. Finally.');setAwake(false);setPose('idle');setLampOn(false);setWindowOpen(false);setCurtainsOpen(false);setFanSpeed(1);setBlanketPulled(false);setPillowMoved(false);setClockShift(0)}
+  const availableScenes=scenes.filter(s=>s.available)
   return (
-    <main className="environment-stage" aria-label="Bedroom environment design preview">
-      <svg className="bedroom-environment" viewBox="0 0 1600 900" role="img" aria-label="A carefully composed hand-drawn bedroom in white with restrained sage and warm neutral accents">
+    <main ref={root} className="restored-app">
+      {intro&&<div className="intro-overlay"><div className="intro-card"><div className="intro-kicker">✦ LIFE.EXE PRESENTS ✦</div><div className="intro-art"><span className="intro-moon"/><div className="intro-bed"/><div className="intro-stick"><span/><i/><b/></div><div className="intro-zzz">Zz</div></div><h2>Someone is having<br/><em>a peaceful day.</em></h2><p className="intro-copy">This is your tiny sandbox. He has a routine, a temper, and absolutely no idea what you are about to do.</p><p className="intro-punch">Let's ruin his peace.</p><div className="intro-rules"><span><b>YOU</b> control the room</span><span><b>HE</b> reacts to chaos</span><span><b>CHAOS</b> is cumulative</span></div><button className="begin-button" onClick={()=>setIntro(false)}>ENTER HIS ROOM <span>→</span></button><small className="intro-foot">BEST EXPERIENCED WITH SOUND ON</small></div></div>}
+      <section className="restored-world">
+        <div className="world-location"><MapPin size={13}/><span>BEDROOM</span><button className="world-places" onClick={()=>setShowPlaces(v=>!v)} aria-label="Choose environment">⌄</button></div>
+        <div className="world-controls">
+          <button className="world-control" onClick={()=>setSoundOn(v=>!v)} aria-label="Toggle sound">{soundOn?<Volume2 size={17}/>:<VolumeX size={17}/>}</button>
+          <button className="world-control" onClick={()=>setShowHints(v=>!v)} aria-label="Toggle object hints"><MousePointer2 size={17}/></button>
+          <button className="world-control" onClick={reset} aria-label="Reset room"><RotateCcw size={17}/></button>
+        </div>
+        <div className="restored-scene" data-lamp={lampOn} data-window={windowOpen} data-curtains={curtainsOpen} data-blanket={blanketPulled} data-pillow={pillowMoved}>
+          <svg className="bedroom-environment" viewBox="0 0 1600 900" role="img" aria-label="A hand-drawn bedroom sandbox">
+            
         <defs>
           <linearGradient id="daylight" x2="0" y2="1"><stop stopColor="#dcecf1"/><stop offset="1" stopColor="#f7faf7"/></linearGradient>
           <linearGradient id="wallwash" x2="0" y2="1"><stop stopColor="#fff"/><stop offset="1" stopColor="#faf9f6"/></linearGradient>
@@ -51,6 +184,30 @@ export default function App() {
           <circle cx="128" cy="117" r="5" fill="#bca98f" stroke="none"/><circle cx="470" cy="117" r="5" fill="#bca98f" stroke="none"/>
         </g>
 
+        {/* Small wall clock, alarm and phone bring the bedroom back to life */}
+        <g className="wall-clock" stroke="#171717" strokeWidth="4" strokeLinejoin="round">
+          <circle cx="790" cy="250" r="48" fill="#fff"/>
+          <circle cx="790" cy="250" r="39" fill="#faf9f5" stroke="#c9c1b5" strokeWidth="2"/>
+          <path d="M790 221 V250 L812 263" fill="none" strokeWidth="4" strokeLinecap="round"/>
+          <circle cx="790" cy="250" r="4" fill="#171717" stroke="none"/>
+          <path d="M790 216 V222 M824 250 H818 M790 284 V278 M756 250 H762" strokeWidth="2"/>
+        </g>
+        <g className="alarm-clock" stroke="#171717" strokeLinejoin="round">
+          <path d="M218 495 Q218 475 238 475 H285 Q305 475 305 495 V529 H218Z" fill="#d7bfa2" strokeWidth="4"/>
+          <circle cx="261" cy="500" r="19" fill="#fff" strokeWidth="3"/>
+          <path d="M261 486 V500 L273 506" fill="none" strokeWidth="3" strokeLinecap="round"/>
+          <path d="M226 476 L217 463 M297 476 L306 463" fill="none" strokeWidth="5" strokeLinecap="round"/>
+          <path d="M232 529 L227 538 M291 529 L296 538" fill="none" strokeWidth="4"/>
+        </g>
+        <g className="phone-object" stroke="#171717" strokeLinejoin="round">
+          <rect x="1142" y="570" width="32" height="57" rx="6" fill="#333" strokeWidth="3"/>
+          <rect x="1147" y="576" width="22" height="42" rx="2" fill="#dcecf1" strokeWidth="1.5"/>
+          <circle cx="1158" cy="622" r="2" fill="#fff" stroke="none"/>
+        </g>
+        <g className="mosquito-object" stroke="#171717" strokeWidth="2.5" strokeLinecap="round" fill="none">
+          <ellipse cx="910" cy="390" rx="5" ry="3" fill="#222"/>
+          <path d="M906 389 Q893 373 887 382 M914 389 Q927 373 933 382 M910 393 L904 405 M912 393 L918 405 M905 389 L897 385 M915 389 L923 385"/>
+        </g>
         {/* Framed botanical print */}
         <g className="wall-art" stroke="#171717" strokeLinejoin="round">
           <rect x="930" y="145" width="240" height="170" rx="3" fill="#d7bfa2" strokeWidth="6"/>
@@ -68,7 +225,7 @@ export default function App() {
           <path d="M-23 -7 Q-22 -26 0 -29 Q22 -26 23 -7 L18 9 Q0 18 -18 9Z" fill="#e5e0d7" strokeWidth="4"/>
           <path d="M-13 2 Q0 8 13 2" fill="none" stroke="#a79e91" strokeWidth="2"/>
           {/* Three broad, gently tapered blades */}
-          <g fill="#b8c9b9" strokeWidth="4">
+          <g className="fan-blades" fill="#b8c9b9" strokeWidth="4">
             <path d="M-9 -15 Q-45 -51 -63 -103 Q-69 -123 -55 -127 Q-36 -126 -20 -91 Q-6 -57 5 -17 Q-1 -10 -9 -15Z"/>
             <path d="M14 -8 Q54 -36 101 -35 Q124 -34 126 -19 Q123 -3 87 8 Q51 17 13 7 Q8 0 14 -8Z"/>
             <path d="M-7 13 Q-20 56 -51 89 Q-66 104 -78 94 Q-87 80 -66 49 Q-44 18 -13 0 Q-4 3 -7 13Z"/>
@@ -183,8 +340,19 @@ export default function App() {
           <path d="M30 650 V674 M120 650 V674" fill="none" strokeWidth="8"/>
         </g>
 
-      </svg>
-      <div className="environment-caption">BEDROOM · ENVIRONMENT DESIGN</div>
+      
+            <g className="stickman-anchor" transform="translate(250 175)">
+              <Stickman mood={mood} awake={awake} reaction={pose} cursorNear={cursorNear} pose={pose}/>
+            </g>
+          </svg>
+          {sceneHotspots.map(h=><button key={h.id} className={`restored-hotspot ${showHints?'hints-on':''}`} style={{left:`${h.x}%`,top:`${h.y}%`,width:`${h.w}%`,height:`${h.h}%`}} onClick={()=>interact(h.id)} aria-label={h.label}><span>{h.label}</span></button>)}
+          {dialogue&&<div className="restored-dialogue">{dialogue}</div>}
+          <div className="restored-caption">LIFE.EXE · {moodName}</div>
+          <button className="restored-disturb" onClick={randomDisturb}><Sparkles size={14}/> DISTURB HIM</button>
+          {showPlaces&&<div className="restored-places"><div className="restored-places-head"><b>CHOOSE ENVIRONMENT</b><button onClick={()=>setShowPlaces(false)} aria-label="Close"><X size={15}/></button></div>{scenes.map(item=><button key={item.id} disabled={!item.available} className={item.id===scene?'selected':''} onClick={()=>{setScene(item.id);setShowPlaces(false)}}><span>{item.icon}</span><b>{item.name}</b><small>{item.available?'AVAILABLE':'COMING SOON'}</small></button>)}</div>}
+        </div>
+        <div className="restored-status"><div><small>HIS CURRENT STATE</small><b>{moodName}</b></div><div><small>IRRITATION</small><b>{level}%</b><i><span style={{width:`${level}%`}}/></i></div><div><small>ENERGY</small><b>{Math.round(energy)}%</b><i><span style={{width:`${energy}%`}}/></i></div><div className="restored-note"> {mood<20?'He is enjoying the quiet. For now.':mood<60?'He is starting to suspect you.':'He is planning something.'}</div></div>
+      </section>
     </main>
   )
 }

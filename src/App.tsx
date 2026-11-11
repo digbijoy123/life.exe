@@ -60,11 +60,28 @@ export default function App() {
         </g>
 
         {/* Ceiling fan is fully inside the room composition */}
-        <g className="ceiling-fan" transform="translate(720 34)" stroke="#171717" strokeWidth="4" strokeLinejoin="round">
-          <path d="M0 0 V48" fill="none"/><circle cy="58" r="10" fill="#fff"/>
-          <path d="M-5 54 Q-66 -9 -47 -20 Q-22 -15 5 52Z" fill="#b9c9bb"/>
-          <path d="M5 55 Q83 16 89 42 Q88 64 7 67Z" fill="#b9c9bb"/>
-          <path d="M-4 64 Q-22 139 -46 124 Q-56 105 -8 55Z" fill="#b9c9bb"/>
+        <g className="ceiling-fan" transform="translate(720 82)" stroke="#171717" strokeLinejoin="round">
+          {/* Ceiling mount, downrod and motor housing */}
+          <path d="M0 -72 V-28" fill="none" strokeWidth="5"/>
+          <path d="M-15 -75 Q0 -86 15 -75 L12 -63 Q0 -57 -12 -63Z" fill="#d8d2c8" strokeWidth="3"/>
+          <path d="M-7 -28 V-5 H7 V-28" fill="#c8c2b8" strokeWidth="3"/>
+          <path d="M-23 -7 Q-22 -26 0 -29 Q22 -26 23 -7 L18 9 Q0 18 -18 9Z" fill="#e5e0d7" strokeWidth="4"/>
+          <path d="M-13 2 Q0 8 13 2" fill="none" stroke="#a79e91" strokeWidth="2"/>
+          {/* Three broad, gently tapered blades */}
+          <g fill="#b8c9b9" strokeWidth="4">
+            <path d="M-9 -15 Q-45 -51 -63 -103 Q-69 -123 -55 -127 Q-36 -126 -20 -91 Q-6 -57 5 -17 Q-1 -10 -9 -15Z"/>
+            <path d="M14 -8 Q54 -36 101 -35 Q124 -34 126 -19 Q123 -3 87 8 Q51 17 13 7 Q8 0 14 -8Z"/>
+            <path d="M-7 13 Q-20 56 -51 89 Q-66 104 -78 94 Q-87 80 -66 49 Q-44 18 -13 0 Q-4 3 -7 13Z"/>
+          </g>
+          {/* Blade-root collars and central cap */}
+          <g fill="#d9d3c9" strokeWidth="2.5">
+            <path d="M-13 -15 Q-5 -22 4 -14 L10 -4 Q2 3 -7 0Z"/>
+            <path d="M8 -15 Q18 -12 20 -3 L15 8 Q5 8 1 0Z"/>
+            <path d="M-9 5 Q-4 -4 5 -5 L13 2 Q10 12 0 15Z"/>
+          </g>
+          <circle cx="0" cy="-1" r="13" fill="#f3f0e9" strokeWidth="4"/>
+          <circle cx="0" cy="-1" r="4" fill="#a99f91" strokeWidth="2"/>
+          <path d="M-2 13 V29 M-2 29 Q-7 34 -2 38 Q3 34 -2 29" fill="none" stroke="#77736d" strokeWidth="2"/>
         </g>
 
         {/* Wardrobe sits against the far right wall */}

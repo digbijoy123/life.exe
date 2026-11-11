@@ -157,36 +157,139 @@ export default function App() {
           <button className={`world-control ${showHints ? 'control-active' : ''}`} title="Toggle interaction hints" onClick={() => setShowHints(v => !v)}><MousePointer2 size={16}/></button>
           <button className="world-control" title="Reset this day" onClick={resetDay}><RotateCcw size={15}/></button>
         </div>
-        <svg className="scene-art" viewBox="0 0 1100 620" role="img" aria-label="A hand-drawn bedroom with a sleeping stickman and interactive objects">
+        <svg className="scene-art" viewBox="0 0 1100 620" role="img" aria-label="Hand-drawn monochrome bedroom with a bed, window, fan, bedside table and interactive objects">
           <defs>
-            <linearGradient id="wall" x2="0" y2="1"><stop stopColor="#d9c9b7"/><stop offset="1" stopColor="#c7b39f"/></linearGradient>
-            <linearGradient id="floor" x2="0" y2="1"><stop stopColor="#9b7564"/><stop offset="1" stopColor="#75584f"/></linearGradient>
-            <radialGradient id="lampGlow"><stop stopColor="#ffe5a4" stopOpacity=".7"/><stop offset="1" stopColor="#ffe5a4" stopOpacity="0"/></radialGradient>
-            <pattern id="wallpaper" width="42" height="42" patternUnits="userSpaceOnUse"><path d="M21 8 q5 5 0 10 q-5 -5 0 -10 M21 25 q5 5 0 10 q-5 -5 0 -10" fill="none" stroke="#a88f7d" strokeOpacity=".18" strokeWidth="1.2"/></pattern>
-            <filter id="soft"><feGaussianBlur stdDeviation="22"/></filter>
+            <pattern id="pencilHatch" width="12" height="12" patternUnits="userSpaceOnUse">
+              <path d="M-2 12 L12 -2 M4 16 L16 4" stroke="#111" strokeWidth=".8" opacity=".12"/>
+            </pattern>
+            <pattern id="fabricHatch" width="16" height="16" patternUnits="userSpaceOnUse">
+              <path d="M0 4 Q4 1 8 4 T16 4 M0 12 Q4 9 8 12 T16 12" fill="none" stroke="#111" strokeWidth=".7" opacity=".15"/>
+            </pattern>
+            <filter id="pencilSoft"><feGaussianBlur stdDeviation="2"/></filter>
           </defs>
-          <rect width="1100" height="455" fill="url(#wall)"/><rect width="1100" height="455" fill="url(#wallpaper)"/>
-          <path d="M0 455 H1100 V620 H0Z" fill="url(#floor)"/><path d="M0 457 H1100" stroke="#4f3b38" strokeWidth="7" opacity=".35"/>
-          <path d="M0 485 H1100 M0 555 H1100" stroke="#d7ad8c" strokeWidth="2" opacity=".18"/>
-          <g opacity=".5" stroke="#4d3c3a" strokeWidth="2"><path d="M120 455 L150 620 M340 455 L370 620 M560 455 L590 620 M780 455 L810 620 M1000 455 L1030 620"/></g>
-          <g className="window-object"><rect x="92" y="86" width="220" height="190" rx="5" fill="#6c5d5a"/><rect x="101" y="95" width="202" height="172" fill="#34495b"/><circle cx="253" cy="130" r="21" fill="#f1d9a3"/><path d="M101 200 Q150 160 190 202 T303 188 V267 H101Z" fill="#637b76"/><path d="M202 95 V267 M101 180 H303" stroke="#e5d5c4" strokeWidth="9"/><path d="M80 70 Q115 50 150 75 L150 292 Q110 280 80 300Z M315 70 Q280 50 245 75 L245 292 Q285 280 315 300Z" fill="#9c6662" stroke="#6d4b4b" strokeWidth="5"/></g>
-          <g><rect x="810" y="92" width="175" height="120" rx="5" fill="#7d6657" stroke="#51433e" strokeWidth="7"/><rect x="821" y="103" width="153" height="98" fill="#d9c4a9"/><path d="M835 186 Q880 130 930 170 T965 140" stroke="#a0a58a" strokeWidth="7" fill="none"/><path d="M850 165 l15 -28 15 28 M915 174 l17 -34 16 34" fill="#83917b"/></g>
-          <g className="door-object"><rect x="1000" y="125" width="82" height="332" rx="4" fill="#795d50" stroke="#4b3d39" strokeWidth="8"/><circle cx="1060" cy="300" r="7" fill="#d9b76e"/><path d="M1010 145 H1070 M1010 435 H1070" stroke="#b58e71" strokeWidth="4"/></g>
-          <g><rect x="0" y="432" width="1100" height="28" fill="#a98a72" opacity=".6"/></g>
-          {active.lamp && <ellipse cx="720" cy="320" rx="290" ry="245" fill="url(#lampGlow)" />}
-          <g className="bed-object"><ellipse cx="550" cy="545" rx="270" ry="22" fill="#30262a" opacity=".25"/><path d="M280 425 Q280 390 320 390 H770 Q810 390 810 430 V535 H280Z" fill="#5d4a4d" stroke="#3e343b" strokeWidth="7"/><path d="M295 425 Q300 402 330 402 H760 Q790 402 795 430 V500 H295Z" fill="#b77e79"/><path d="M300 460 Q500 430 790 464 V526 H300Z" fill="#7d777d"/><path d="M310 470 Q430 450 530 475 T790 470" fill="none" stroke="#d5a49a" strokeWidth="4" opacity=".5"/><rect x="300" y="520" width="25" height="48" rx="4" fill="#493a3c"/><rect x="765" y="520" width="25" height="48" rx="4" fill="#493a3c"/><rect x="330" y="395" width="115" height="48" rx="15" fill="#eee2d0" stroke="#827a76" strokeWidth="4"/><path d="M350 410 q25 -8 70 0" stroke="#b3a39b" strokeWidth="3" fill="none"/></g>
-          <g className="alarm-object"><rect x="340" y="395" width="62" height="35" rx="5" fill="#8b6a57" stroke="#51413e" strokeWidth="4"/><circle cx="370" cy="380" r="20" fill="#e8d9bd" stroke="#65534d" strokeWidth="4"/><path d="M370 380 L370 366 M370 380 L381 385" stroke="#574a47" strokeWidth="3" strokeLinecap="round"/><path d="M354 361 l-7 -9 M386 361 l7 -9" stroke="#574a47" strokeWidth="4" strokeLinecap="round"/></g>
-          <g className="lamp-object"><path d="M730 435 V345" stroke="#55433d" strokeWidth="8"/><path d="M710 345 Q730 300 750 345Z" fill="#e5bb79" stroke="#685248" strokeWidth="5"/><ellipse cx="730" cy="435" rx="31" ry="8" fill="#685248"/><path d="M730 430 V442" stroke="#e4bd7e" strokeWidth="5"/></g>
-          <g className="clock-object"><circle cx="570" cy="155" r="43" fill="#e9dfce" stroke="#6e5c54" strokeWidth="6"/><circle cx="570" cy="155" r="4" fill="#554a48"/><path d={`M570 155 L570 ${130 + clockOffset}`} stroke="#5b4b47" strokeWidth="4" strokeLinecap="round"/><path d="M570 155 L590 165" stroke="#5b4b47" strokeWidth="3" strokeLinecap="round"/><text x="570" y="118" textAnchor="middle" fontSize="9" fill="#75645b">12</text></g>
-          <g className="fan-object"><path d="M550 0 V55" stroke="#544b4a" strokeWidth="7"/><circle cx="550" cy="66" r="11" fill="#51484a"/><g className={fanSpeed ? 'fan-spin' : ''} style={{ transformOrigin: '550px 66px' }} fill="#7b6b68"><path d="M550 65 Q500 5 525 2 Q555 8 555 62Z"/><path d="M551 66 Q615 20 615 49 Q600 75 555 71Z"/><path d="M550 67 Q570 130 542 128 Q520 108 545 69Z"/></g></g>
-          <g className="phone-object"><rect x="815" y="472" width="35" height="62" rx="7" fill="#35323b" stroke="#d5c3aa" strokeWidth="3"/><rect x="820" y="480" width="25" height="43" rx="3" fill="#a4b5a0"/><circle cx="832" cy="528" r="2" fill="#eee"/></g>
-          <g className="mosquito-object" style={{ opacity: mosquitoOn ? 1 : .15 }}><path d="M630 345 q-8 -13 -16 -2 M630 345 q8 -13 16 -2 M630 345 l-3 12 M630 345 l4 12" stroke="#403a43" strokeWidth="2.5" fill="none" strokeLinecap="round"/><circle cx="630" cy="344" r="3" fill="#403a43"/></g>
-          <g className="door-knock"><path d="M1040 265 q-24 0 -24 24 M1040 265 q24 0 24 24" stroke="#e7c18a" strokeWidth="4" fill="none"/></g>
+
+          <!-- paper, wall and floor: deliberately uneven ink contours -->
+          <rect width="1100" height="620" fill="#fff"/>
+          <path d="M0 0 H1100 V448 Q850 445 560 451 T0 447Z" fill="#fff" stroke="#171717" strokeWidth="3"/>
+          <path d="M0 449 Q270 445 550 451 T1100 447 V620 H0Z" fill="#fafafa" stroke="#171717" strokeWidth="3"/>
+          <path d="M0 462 Q300 456 550 463 T1100 459" fill="none" stroke="#111" strokeWidth="2"/>
+          <path d="M0 469 Q260 464 550 470 T1100 466" fill="none" stroke="#111" strokeWidth="1" opacity=".35"/>
+          <g fill="none" stroke="#111" strokeWidth="1.6" opacity=".22">
+            <path d="M0 515 Q220 507 430 517 T860 515 T1100 516"/>
+            <path d="M0 585 Q230 575 450 588 T880 585 T1100 586"/>
+            <path d="M170 465 L205 620 M410 464 L450 620 M690 464 L725 620 M950 463 L985 620"/>
+          </g>
+          <path d="M0 0 H1100 V448 H0Z" fill="url(#pencilHatch)" opacity=".24"/>
+
+          <!-- window and loose curtains -->
+          <g className="window-object" stroke="#111" strokeWidth="5" strokeLinejoin="round">
+            <path d="M92 105 Q92 94 106 94 H302 Q316 94 316 108 V292 H92Z" fill="#fff"/>
+            <path d="M105 111 H303 V278 H105Z" fill="#fff"/>
+            <path d="M204 111 Q201 190 204 278 M105 194 Q205 190 303 194" fill="none" strokeWidth="7"/>
+            <path d="M107 263 Q151 220 202 252 T302 245 V278 H107Z" fill="#f7f7f7" strokeWidth="2"/>
+            <path d="M108 260 Q150 232 193 253 M217 250 Q260 226 301 244" fill="none" strokeWidth="1.6"/>
+          </g>
+          <g className="curtain-object" fill="#fff" stroke="#111" strokeWidth="4" strokeLinejoin="round">
+            <path d="M75 79 Q112 57 151 82 L145 328 Q110 308 77 337Z"/>
+            <path d="M326 81 Q291 59 254 82 L261 329 Q293 310 326 338Z"/>
+            <path d="M88 92 Q111 80 137 91 M88 112 Q111 99 139 111 M273 93 Q296 80 315 94 M271 116 Q293 102 316 116" fill="none" strokeWidth="1.4"/>
+          </g>
+
+          <!-- framed wall picture and little wall shelf -->
+          <g stroke="#111" strokeWidth="4" strokeLinejoin="round">
+            <path d="M825 106 Q825 98 836 98 H1000 Q1010 98 1010 108 V218 H825Z" fill="#fff"/>
+            <path d="M839 112 H995 V204 H839Z" fill="#fff" strokeWidth="2"/>
+            <path d="M850 190 Q883 130 916 180 T983 145" fill="none" strokeWidth="3"/>
+            <path d="M863 176 l18 -30 18 30 M928 177 l18 -37 19 37" fill="#fff" strokeWidth="2.5"/>
+            <path d="M846 222 H1002" strokeWidth="2"/>
+          </g>
+
+          <!-- ceiling fan, drawn with slightly imperfect blades -->
+          <g className="fan-object" stroke="#111" strokeWidth="4" strokeLinejoin="round">
+            <path d="M550 0 V54" fill="none"/>
+            <circle cx="550" cy="65" r="10" fill="#fff"/>
+            <g className={fanSpeed ? 'fan-spin' : ''} style={{ transformOrigin: '550px 65px' }} fill="#fff">
+              <path d="M548 62 Q503 4 520 1 Q543 0 556 59Z"/>
+              <path d="M554 63 Q615 25 621 42 Q628 61 559 72Z"/>
+              <path d="M547 70 Q527 132 510 119 Q499 104 542 65Z"/>
+            </g>
+          </g>
+
+          <!-- door with panel detail -->
+          <g className="door-object" stroke="#111" strokeWidth="5" strokeLinejoin="round">
+            <path d="M1005 135 Q1005 126 1017 126 H1080 V449 H1005Z" fill="#fff"/>
+            <path d="M1018 149 H1067 V259 H1018Z M1018 278 H1067 V420 H1018Z" fill="none" strokeWidth="2"/>
+            <circle cx="1060" cy="293" r="7" fill="#111" stroke="none"/>
+            <path d="M1025 157 H1059 M1025 287 H1059 M1025 410 H1059" strokeWidth="1.3"/>
+          </g>
+
+          <!-- bedside table and alarm clock -->
+          <g stroke="#111" strokeWidth="4" strokeLinejoin="round">
+            <path d="M270 382 Q270 374 281 374 H410 V462 H270Z" fill="#fff"/>
+            <path d="M280 462 V490 M400 462 V490 M275 490 H407" fill="none" strokeWidth="5"/>
+            <path d="M292 390 H389 V447 H292Z" fill="url(#fabricHatch)" strokeWidth="2"/>
+          </g>
+          <g className="alarm-object" stroke="#111" strokeWidth="4" strokeLinejoin="round">
+            <path d="M337 350 Q337 342 346 342 H384 Q393 342 393 351 V380 H337Z" fill="#fff"/>
+            <circle cx="365" cy="348" r="25" fill="#fff"/>
+            <path d="M365 348 L365 332 M365 348 L378 355" strokeWidth="3" strokeLinecap="round"/>
+            <path d="M348 326 l-9 -10 M382 326 l9 -10" fill="none"/>
+            <path d="M353 374 Q365 380 377 374" fill="none" strokeWidth="2"/>
+          </g>
+
+          <!-- bed frame, mattress and headboard -->
+          <g className="bed-object" stroke="#111" strokeLinejoin="round">
+            <ellipse cx="590" cy="566" rx="310" ry="18" fill="#111" opacity=".10" stroke="none"/>
+            <path d="M318 365 Q318 340 345 340 H785 Q812 340 812 368 V531 H318Z" fill="#fff" strokeWidth="6"/>
+            <path d="M337 365 Q337 356 350 356 H767 Q789 356 789 373 V498 H337Z" fill="#fff" strokeWidth="3"/>
+            <path d="M339 373 Q335 310 365 293 Q395 275 430 294 Q448 307 449 350" fill="#fff" strokeWidth="5"/>
+            <path d="M449 350 Q470 330 505 340" fill="none" strokeWidth="2"/>
+            <path d="M353 378 Q560 360 787 379" fill="none" strokeWidth="2"/>
+            <path d="M340 491 Q555 507 790 490 V532 H340Z" fill="url(#fabricHatch)" strokeWidth="2"/>
+            <path d="M359 532 V582 M770 532 V582" fill="none" strokeWidth="12"/>
+            <path d="M343 582 H375 M754 582 H786" fill="none" strokeWidth="7"/>
+          </g>
+
+          <!-- pillow and folded blanket -->
+          <g stroke="#111" strokeWidth="3.5" strokeLinejoin="round">
+            <path d="M367 367 Q367 350 387 350 H467 Q486 352 482 377 L478 405 Q475 420 456 416 L384 407 Q365 403 367 367Z" fill="#fff"/>
+            <path d="M385 366 Q416 358 462 370 M382 394 Q421 401 464 397" fill="none" strokeWidth="1.5"/>
+          </g>
+          {active.lamp && <ellipse cx="760" cy="390" rx="180" ry="160" fill="#111" opacity=".035"/>}
+          <g className="lamp-object" stroke="#111" strokeWidth="4" strokeLinejoin="round">
+            <path d="M738 429 V343" fill="none" strokeWidth="7"/>
+            <path d="M705 344 Q738 281 771 344Z" fill="#fff"/>
+            <path d="M717 345 Q738 330 759 345" fill="none" strokeWidth="1.6"/>
+            <ellipse cx="738" cy="430" rx="34" ry="8" fill="#fff"/>
+          </g>
+
+          <!-- wall clock -->
+          <g className="clock-object" stroke="#111" strokeWidth="4">
+            <circle cx="570" cy="174" r="42" fill="#fff"/>
+            <circle cx="570" cy="174" r="3" fill="#111"/>
+            <path d={`M570 174 L570 ${149 + clockOffset}`} strokeWidth="3" strokeLinecap="round"/>
+            <path d="M570 174 L590 186" strokeWidth="3" strokeLinecap="round"/>
+            <path d="M570 139 V145 M605 174 H599 M570 209 V203 M535 174 H541" strokeWidth="2"/>
+          </g>
+
+          <!-- mosquito, drawn as a tiny comic nuisance -->
+          <g className="mosquito-object" style={{ opacity: mosquitoOn ? 1 : .15 }} stroke="#111" strokeWidth="2.5" fill="none" strokeLinecap="round">
+            <path d="M630 345 q-8 -13 -16 -2 M630 345 q8 -13 16 -2 M630 345 l-3 12 M630 345 l4 12 M627 344 l-8 -8 M633 344 l8 -8"/>
+            <circle cx="630" cy="344" r="3" fill="#111"/>
+          </g>
+
+          <!-- character and blanket remain in front of the bed -->
           <Stickman mood={mood} awake={awake} reaction={reaction} cursorNear={cursorNear} pose={pose} />
-          <g className="blanket-overlay" opacity={active.blanket ? 1 : 0}><path d="M490 447 Q550 430 610 450 L625 520 Q560 540 500 515Z" fill="#8b8190" stroke="#544b59" strokeWidth="5"/></g>
-          {active.window && <path d="M100 280 Q200 320 310 280" stroke="#d6e4d2" strokeWidth="4" fill="none" strokeDasharray="8 8" />}
-          <g opacity=".2"><path d="M0 610 Q220 580 440 610 T880 610 T1320 610" stroke="#ead5bc" strokeWidth="4" fill="none"/></g>
-        </svg>
+          <g className="blanket-overlay" opacity={active.blanket ? 1 : 0} stroke="#111" strokeWidth="4" strokeLinejoin="round">
+            <path d="M490 447 Q550 427 610 450 L625 520 Q560 540 500 515Z" fill="#fff"/>
+            <path d="M503 461 Q555 449 607 463 M508 498 Q558 516 615 502" fill="none" strokeWidth="1.5"/>
+          </g>
+          {active.window && <g fill="none" stroke="#111" strokeWidth="2"><path d="M115 280 Q200 310 295 280" strokeDasharray="5 8"/><path d="M125 292 q-10 14 -20 18 M275 292 q10 14 20 18"/></g>}
+          <g fill="none" stroke="#111" strokeWidth="1.2" opacity=".35">
+            <path d="M0 606 Q220 580 440 606 T880 606 T1320 606"/>
+            <path d="M10 612 Q240 588 460 612 T900 612"/>
+          </g>
+        </svg>  </svg>
         <div className="night-vignette" />
         {isNight && <div className="night-overlay" />}
         <div className="scene-grain" />

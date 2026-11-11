@@ -126,3 +126,12 @@ body{background:#fff!important}
 @media(prefers-reduced-motion:reduce){
  .restored-app *, .restored-app *:before,.restored-app *:after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
 }
+
+
+/* SVG-space hitboxes share the artwork viewBox, so they stay aligned at every aspect ratio */
+.bedroom-hitboxes{pointer-events:none}
+.svg-hotspot{fill:transparent;stroke:transparent;stroke-width:2;pointer-events:all;cursor:pointer;outline:none}
+.svg-hotspot:hover,.svg-hotspot:focus-visible{fill:#f1bd7b22;stroke:#27221e;stroke-dasharray:7 5;stroke-width:2.5}
+.svg-hotspot:focus-visible{filter:drop-shadow(0 0 3px #fff);stroke-width:4}
+@media(hover:none){.svg-hotspot:active{fill:#f1bd7b38;stroke:#27221e;stroke-width:3}}
+@media(prefers-reduced-motion:reduce){.svg-hotspot{transition:none}}

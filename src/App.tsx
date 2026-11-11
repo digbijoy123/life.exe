@@ -168,7 +168,7 @@ export default function App() {
             <filter id="pencilSoft"><feGaussianBlur stdDeviation="2"/></filter>
           </defs>
 
-          <!-- paper, wall and floor: deliberately uneven ink contours -->
+          {/* paper, wall and floor: deliberately uneven ink contours */}
           <rect width="1100" height="620" fill="#fff"/>
           <path d="M0 0 H1100 V448 Q850 445 560 451 T0 447Z" fill="#fff" stroke="#171717" strokeWidth="3"/>
           <path d="M0 449 Q270 445 550 451 T1100 447 V620 H0Z" fill="#fafafa" stroke="#171717" strokeWidth="3"/>
@@ -181,7 +181,7 @@ export default function App() {
           </g>
           <path d="M0 0 H1100 V448 H0Z" fill="url(#pencilHatch)" opacity=".24"/>
 
-          <!-- window and loose curtains -->
+          {/* window and loose curtains */}
           <g className="window-object" stroke="#111" strokeWidth="5" strokeLinejoin="round">
             <path d="M92 105 Q92 94 106 94 H302 Q316 94 316 108 V292 H92Z" fill="#fff"/>
             <path d="M105 111 H303 V278 H105Z" fill="#fff"/>
@@ -195,7 +195,7 @@ export default function App() {
             <path d="M88 92 Q111 80 137 91 M88 112 Q111 99 139 111 M273 93 Q296 80 315 94 M271 116 Q293 102 316 116" fill="none" strokeWidth="1.4"/>
           </g>
 
-          <!-- framed wall picture and little wall shelf -->
+          {/* framed wall picture and little wall shelf */}
           <g stroke="#111" strokeWidth="4" strokeLinejoin="round">
             <path d="M825 106 Q825 98 836 98 H1000 Q1010 98 1010 108 V218 H825Z" fill="#fff"/>
             <path d="M839 112 H995 V204 H839Z" fill="#fff" strokeWidth="2"/>
@@ -204,7 +204,7 @@ export default function App() {
             <path d="M846 222 H1002" strokeWidth="2"/>
           </g>
 
-          <!-- ceiling fan, drawn with slightly imperfect blades -->
+          {/* ceiling fan, drawn with slightly imperfect blades */}
           <g className="fan-object" stroke="#111" strokeWidth="4" strokeLinejoin="round">
             <path d="M550 0 V54" fill="none"/>
             <circle cx="550" cy="65" r="10" fill="#fff"/>
@@ -215,7 +215,7 @@ export default function App() {
             </g>
           </g>
 
-          <!-- door with panel detail -->
+          {/* door with panel detail */}
           <g className="door-object" stroke="#111" strokeWidth="5" strokeLinejoin="round">
             <path d="M1005 135 Q1005 126 1017 126 H1080 V449 H1005Z" fill="#fff"/>
             <path d="M1018 149 H1067 V259 H1018Z M1018 278 H1067 V420 H1018Z" fill="none" strokeWidth="2"/>
@@ -223,7 +223,7 @@ export default function App() {
             <path d="M1025 157 H1059 M1025 287 H1059 M1025 410 H1059" strokeWidth="1.3"/>
           </g>
 
-          <!-- bedside table and alarm clock -->
+          {/* bedside table and alarm clock */}
           <g stroke="#111" strokeWidth="4" strokeLinejoin="round">
             <path d="M270 382 Q270 374 281 374 H410 V462 H270Z" fill="#fff"/>
             <path d="M280 462 V490 M400 462 V490 M275 490 H407" fill="none" strokeWidth="5"/>
@@ -237,7 +237,7 @@ export default function App() {
             <path d="M353 374 Q365 380 377 374" fill="none" strokeWidth="2"/>
           </g>
 
-          <!-- bed frame, mattress and headboard -->
+          {/* bed frame, mattress and headboard */}
           <g className="bed-object" stroke="#111" strokeLinejoin="round">
             <ellipse cx="590" cy="566" rx="310" ry="18" fill="#111" opacity=".10" stroke="none"/>
             <path d="M318 365 Q318 340 345 340 H785 Q812 340 812 368 V531 H318Z" fill="#fff" strokeWidth="6"/>
@@ -250,7 +250,7 @@ export default function App() {
             <path d="M343 582 H375 M754 582 H786" fill="none" strokeWidth="7"/>
           </g>
 
-          <!-- pillow and folded blanket -->
+          {/* pillow and folded blanket */}
           <g stroke="#111" strokeWidth="3.5" strokeLinejoin="round">
             <path d="M367 367 Q367 350 387 350 H467 Q486 352 482 377 L478 405 Q475 420 456 416 L384 407 Q365 403 367 367Z" fill="#fff"/>
             <path d="M385 366 Q416 358 462 370 M382 394 Q421 401 464 397" fill="none" strokeWidth="1.5"/>
@@ -263,7 +263,7 @@ export default function App() {
             <ellipse cx="738" cy="430" rx="34" ry="8" fill="#fff"/>
           </g>
 
-          <!-- wall clock -->
+          {/* wall clock */}
           <g className="clock-object" stroke="#111" strokeWidth="4">
             <circle cx="570" cy="174" r="42" fill="#fff"/>
             <circle cx="570" cy="174" r="3" fill="#111"/>
@@ -272,13 +272,13 @@ export default function App() {
             <path d="M570 139 V145 M605 174 H599 M570 209 V203 M535 174 H541" strokeWidth="2"/>
           </g>
 
-          <!-- mosquito, drawn as a tiny comic nuisance -->
+          {/* mosquito, drawn as a tiny comic nuisance */}
           <g className="mosquito-object" style={{ opacity: mosquitoOn ? 1 : .15 }} stroke="#111" strokeWidth="2.5" fill="none" strokeLinecap="round">
             <path d="M630 345 q-8 -13 -16 -2 M630 345 q8 -13 16 -2 M630 345 l-3 12 M630 345 l4 12 M627 344 l-8 -8 M633 344 l8 -8"/>
             <circle cx="630" cy="344" r="3" fill="#111"/>
           </g>
 
-          <!-- character and blanket remain in front of the bed -->
+          {/* character and blanket remain in front of the bed */}
           <Stickman mood={mood} awake={awake} reaction={reaction} cursorNear={cursorNear} pose={pose} />
           <g className="blanket-overlay" opacity={active.blanket ? 1 : 0} stroke="#111" strokeWidth="4" strokeLinejoin="round">
             <path d="M490 447 Q550 427 610 450 L625 520 Q560 540 500 515Z" fill="#fff"/>

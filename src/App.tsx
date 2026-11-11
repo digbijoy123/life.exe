@@ -149,6 +149,7 @@ export default function App() {
 
   return <main className="app-shell">
     {/* Full-screen scene: only essential controls float over the world. */}
+    <section className="game-frame">
       <div ref={sceneRef} className={`scene scene-${scene} ${active.lamp ? 'lamp-on' : ''} ${active.curtains ? 'curtains-open' : ''}`}>
         <div className="world-location"> <Moon size={13}/> <span>{sceneLabel.toUpperCase()}</span> <button className="world-places" onClick={() => setShowPlaces(v => !v)} aria-label="Explore places"><DoorOpen size={15}/></button></div>
         <div className="world-controls">

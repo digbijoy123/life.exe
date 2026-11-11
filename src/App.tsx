@@ -77,7 +77,25 @@ export default function App() {
   }, [reaction])
   const sceneLabel = useMemo(() => scenes.find(s => s.id === scene)?.name || 'Bedroom', [scene])
 
+  function playTick() {
+    if (!soundOn) return
+    try {
+      const AudioCtx = window.AudioContext || (window as typeof window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext
+      if (!AudioCtx) return
+      const ctx = new AudioCtx()
+      const osc = ctx.createOscillator()
+      const gain = ctx.createGain()
+      osc.type = 'sine'
+      osc.frequency.value = mood > 65 ? 190 : 420
+      gain.gain.setValueAtTime(0.045, ctx.currentTime)
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.11)
+      osc.connect(gain); gain.connect(ctx.destination)
+      osc.start(); osc.stop(ctx.currentTime + 0.12)
+      osc.onended = () => void ctx.close()
+    } catch { /* Audio is an optional enhancement. */ }
+  }
   function speak(text: string, amount = 5, poseName = 'look') {
+    playTick()
     setDialogue(text)
     setMood(v => Math.min(100, v + amount))
     setInteractions(v => v + 1)
@@ -163,6 +181,7 @@ export default function App() {
           <g><rect x="0" y="432" width="1100" height="28" fill="#a98a72" opacity=".6"/></g>
           {active.lamp && <ellipse cx="720" cy="320" rx="290" ry="245" fill="url(#lampGlow)" />}
           <g className="bed-object"><ellipse cx="550" cy="545" rx="270" ry="22" fill="#30262a" opacity=".25"/><path d="M280 425 Q280 390 320 390 H770 Q810 390 810 430 V535 H280Z" fill="#5d4a4d" stroke="#3e343b" strokeWidth="7"/><path d="M295 425 Q300 402 330 402 H760 Q790 402 795 430 V500 H295Z" fill="#b77e79"/><path d="M300 460 Q500 430 790 464 V526 H300Z" fill="#7d777d"/><path d="M310 470 Q430 450 530 475 T790 470" fill="none" stroke="#d5a49a" strokeWidth="4" opacity=".5"/><rect x="300" y="520" width="25" height="48" rx="4" fill="#493a3c"/><rect x="765" y="520" width="25" height="48" rx="4" fill="#493a3c"/><rect x="330" y="395" width="115" height="48" rx="15" fill="#eee2d0" stroke="#827a76" strokeWidth="4"/><path d="M350 410 q25 -8 70 0" stroke="#b3a39b" strokeWidth="3" fill="none"/></g>
+          <g className="alarm-object"><rect x="340" y="395" width="62" height="35" rx="5" fill="#8b6a57" stroke="#51413e" strokeWidth="4"/><circle cx="370" cy="380" r="20" fill="#e8d9bd" stroke="#65534d" strokeWidth="4"/><path d="M370 380 L370 366 M370 380 L381 385" stroke="#574a47" strokeWidth="3" strokeLinecap="round"/><path d="M354 361 l-7 -9 M386 361 l7 -9" stroke="#574a47" strokeWidth="4" strokeLinecap="round"/></g>
           <g className="lamp-object"><path d="M730 435 V345" stroke="#55433d" strokeWidth="8"/><path d="M710 345 Q730 300 750 345Z" fill="#e5bb79" stroke="#685248" strokeWidth="5"/><ellipse cx="730" cy="435" rx="31" ry="8" fill="#685248"/><path d="M730 430 V442" stroke="#e4bd7e" strokeWidth="5"/></g>
           <g className="clock-object"><circle cx="570" cy="155" r="43" fill="#e9dfce" stroke="#6e5c54" strokeWidth="6"/><circle cx="570" cy="155" r="4" fill="#554a48"/><path d={`M570 155 L570 ${130 + clockOffset}`} stroke="#5b4b47" strokeWidth="4" strokeLinecap="round"/><path d="M570 155 L590 165" stroke="#5b4b47" strokeWidth="3" strokeLinecap="round"/><text x="570" y="118" textAnchor="middle" fontSize="9" fill="#75645b">12</text></g>
           <g className="fan-object"><path d="M550 0 V55" stroke="#544b4a" strokeWidth="7"/><circle cx="550" cy="66" r="11" fill="#51484a"/><g className={fanSpeed ? 'fan-spin' : ''} style={{ transformOrigin: '550px 66px' }} fill="#7b6b68"><path d="M550 65 Q500 5 525 2 Q555 8 555 62Z"/><path d="M551 66 Q615 20 615 49 Q600 75 555 71Z"/><path d="M550 67 Q570 130 542 128 Q520 108 545 69Z"/></g></g>
@@ -184,10 +203,10 @@ export default function App() {
         {bedroomObjects.map((obj, index) => {
           const positions: Record<ObjectId, { left: string; top: string; width: string; height: string }> = {
             lamp: { left: '64%', top: '49%', width: '8%', height: '22%' },
-            alarm: { left: '31%', top: '62%', width: '7%', height: '9%' },
+            alarm: { left: '30%', top: '56%', width: '8%', height: '12%' },
             bed: { left: '25%', top: '62%', width: '49%', height: '27%' },
-            window: { left: '7%', top: '12%', width: '22%', height: '33%' },
-            curtains: { left: '6%', top: '10%', width: '24%', height: '40%' },
+            window: { left: '12%', top: '12%', width: '15%', height: '33%' },
+            curtains: { left: '6%', top: '10%', width: '5%', height: '40%' },
             pillow: { left: '29%', top: '62%', width: '13%', height: '9%' },
             blanket: { left: '43%', top: '69%', width: '18%', height: '16%' },
             fan: { left: '43%', top: '0%', width: '15%', height: '23%' },
@@ -203,7 +222,7 @@ export default function App() {
         })}
         {showPlaces && <div className="places-panel"><div className="places-head"><div><small>CHOOSE YOUR NEXT VICTIM</small><strong>Where is he now?</strong></div><button onClick={() => setShowPlaces(false)} aria-label="Close places"><X size={17}/></button></div><div className="places-grid">{scenes.map(s => <button key={s.id} disabled={!s.available} className={scene === s.id ? 'selected' : ''} onClick={() => changeScene(s.id)}><span>{s.icon}</span><b>{s.name}</b><small>{s.available ? s.subtitle : 'COMING SOON'}</small></button>)}</div><p>More places are being prepared. He has no idea.</p></div>}
       </div>
-      <div className="scene-footer"><div className="legend"><span><i className="legend-ring" /> INTERACTIVE OBJECT</span><span><i className="legend-dot" /> CHARACTER</span></div><button className="next-button" onClick={() => changeScene('bedroom')}><Sparkles size={14}/> RANDOM ENCOUNTER <ArrowRight size={14}/></button></div>
+      <div className="scene-footer"><div className="legend"><span><i className="legend-ring" /> INTERACTIVE OBJECT</span><span><i className="legend-dot" /> CHARACTER</span></div><button className="next-button" onClick={() => interact(bedroomObjects[Math.floor(Math.random() * bedroomObjects.length)].id)}><Sparkles size={14}/> RANDOM DISTURBANCE <ArrowRight size={14}/></button></div>
     </section>
 
     <section className="status-panel">

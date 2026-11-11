@@ -132,7 +132,7 @@ export default function App() {
           <button className="world-control" onClick={()=>setShowHints(v=>!v)} aria-label="Toggle object hints"><MousePointer2 size={17}/></button>
           <button className="world-control" onClick={reset} aria-label="Reset room"><RotateCcw size={17}/></button>
         </div>
-        <div className="restored-scene" data-lamp={lampOn} data-window={windowOpen} data-curtains={curtainsOpen} data-blanket={blanketPulled} data-pillow={pillowMoved}>
+        <div className="restored-scene" data-lamp={lampOn} data-window={windowOpen} data-curtains={curtainsOpen} data-blanket={blanketPulled} data-pillow={pillowMoved} data-fan={fanSpeed} data-clock={clockShift}>
           <svg className="bedroom-environment" viewBox="0 0 1600 900" role="img" aria-label="A hand-drawn bedroom sandbox">
             
         <defs>
@@ -177,8 +177,8 @@ export default function App() {
           <path d="M299 163 V451 M149 306 H449" fill="none" strokeWidth="7"/>
           <path d="M149 386 Q212 332 299 381 T449 373 V451 H149Z" fill="#c4dce0" strokeWidth="2"/>
           <path d="M153 385 Q215 349 286 384 M313 379 Q382 345 445 373" fill="none" stroke="#829b91" strokeWidth="2"/>
-          <path d="M100 120 Q169 87 235 120 L224 500 Q166 466 107 505Z" fill="#b9cbb8" strokeWidth="5"/>
-          <path d="M500 120 Q431 87 365 120 L376 500 Q434 466 493 505Z" fill="#b9cbb8" strokeWidth="5"/>
+          <path className="curtain-left" d="M100 120 Q169 87 235 120 L224 500 Q166 466 107 505Z" fill="#b9cbb8" strokeWidth="5"/>
+          <path className="curtain-right" d="M500 120 Q431 87 365 120 L376 500 Q434 466 493 505Z" fill="#b9cbb8" strokeWidth="5"/>
           <path d="M116 151 Q163 132 216 151 M111 180 Q165 161 220 180 M384 151 Q438 132 484 151 M380 180 Q435 161 489 180" fill="none" stroke="#8b988d" strokeWidth="2" opacity=".65"/>
           <path d="M95 116 Q300 90 505 116" fill="none" strokeWidth="7"/>
           <circle cx="128" cy="117" r="5" fill="#bca98f" stroke="none"/><circle cx="470" cy="117" r="5" fill="#bca98f" stroke="none"/>

@@ -60,12 +60,12 @@ export default function App() {
         </g>
 
         <g className="wardrobe" stroke="#111" strokeLinejoin="round">
-          <path d="M1185 390 Q1185 378 1198 378 H1354 V650 H1185Z" fill="#d9cbb7" strokeWidth="6"/>
-          <path d="M1203 399 H1271 V630 H1203Z M1280 399 H1337 V630 H1280Z" fill="#f4eee4" strokeWidth="3"/>
-          <path d="M1263 405 V622 M1272 405 V622" fill="none" strokeWidth="1.5"/>
-          <circle cx="1253" cy="520" r="5" fill="#111"/>
-          <circle cx="1295" cy="520" r="5" fill="#111"/>
-          <path d="M1208 415 H1260 M1285 415 H1331" strokeWidth="1.5" opacity=".5"/>
+          <path d="M1215 390 Q1215 378 1228 378 H1384 V650 H1215Z" fill="#d9cbb7" strokeWidth="6"/>
+          <path d="M1233 399 H1301 V630 H1233Z M1310 399 H1367 V630 H1310Z" fill="#f4eee4" strokeWidth="3"/>
+          <path d="M1293 405 V622 M1302 405 V622" fill="none" strokeWidth="1.5"/>
+          <circle cx="1283" cy="520" r="5" fill="#111"/>
+          <circle cx="1325" cy="520" r="5" fill="#111"/>
+          <path d="M1238 415 H1290 M1315 415 H1361" strokeWidth="1.5" opacity=".5"/>
         </g>
 
         <g className="bedside-left" stroke="#111" strokeLinejoin="round">
@@ -87,8 +87,8 @@ export default function App() {
         <g className="bed" stroke="#111" strokeLinejoin="round">
           <path d="M390 440 Q390 409 425 409 H1050 Q1084 409 1084 443 V750 H390Z" fill="#e7dfd3" strokeWidth="8"/>
           <path d="M414 447 Q414 430 438 430 H1036 Q1060 430 1060 451 V699 H414Z" fill="#fff" strokeWidth="3"/>
-          <path d="M412 460 Q400 365 474 350 Q543 340 570 414 L570 446" fill="#d8cbbb" strokeWidth="7"/>
-          <path d="M424 462 Q435 385 482 374 Q526 369 550 427" fill="none" strokeWidth="2"/>
+          <path d="M412 460 Q400 405 474 390 Q543 380 570 414 L570 446" fill="#d8cbbb" strokeWidth="7"/>
+          <path d="M424 462 Q435 415 482 402 Q526 397 550 427" fill="none" strokeWidth="2"/>
           <path d="M572 452 Q790 426 1058 455" fill="none" strokeWidth="2"/>
           <path d="M414 665 Q735 691 1060 663 V727 H414Z" fill="#f4f0e9" strokeWidth="3"/>
           <path d="M435 750 V812 M1038 750 V812" fill="none" strokeWidth="18"/>

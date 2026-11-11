@@ -164,15 +164,12 @@ export default function App() {
           <path d="M29 566 H121 V624 H29Z" fill="#e8d2b5" strokeWidth="2"/>
           <path d="M37 580 H112 M37 592 H112" fill="none" stroke="#9b7655" strokeWidth="2"/>
           <path d="M30 650 V674 M120 650 V674" fill="none" strokeWidth="8"/>
-          <path d="M145 645 H205 L198 704 H153Z" fill="#b98e68" strokeWidth="4"/>
-          <path d="M174 646 Q140 590 126 605 Q131 630 174 646Z M176 645 Q188 579 214 586 Q220 616 176 645Z M174 645 Q160 606 176 574 Q197 591 174 645Z" fill="#83a783" strokeWidth="3"/>
-          <path d="M174 645 V594 M172 630 L140 610 M178 620 L207 593" fill="none" strokeWidth="2"/>
-          <path d="M1295 612 Q1295 575 1330 566 Q1373 557 1393 592 L1393 696 H1295Z" fill="#b8c8b6" strokeWidth="5"/>
-          <path d="M1310 608 Q1310 585 1337 582 Q1370 580 1378 608 V665 H1310Z" fill="#e0e8dc" strokeWidth="3"/>
-          <path d="M1295 666 Q1345 647 1393 666 V724 H1295Z" fill="#9fb39b" strokeWidth="5"/>
-          <path d="M1310 724 V760 M1378 724 V760" fill="none" strokeWidth="9"/>
-          <path d="M1302 760 H1320 M1369 760 H1387" fill="none" strokeWidth="4"/>
-          <path d="M1318 566 Q1345 531 1372 566" fill="none" stroke="#879b83" strokeWidth="3"/>
+          <path d="M1460 612 Q1460 575 1505 566 Q1550 557 1570 592 L1570 696 H1460Z" fill="#b8c8b6" strokeWidth="5"/>
+          <path d="M1475 608 Q1475 585 1337 582 Q1370 580 1555 608 V665 H1475Z" fill="#e0e8dc" strokeWidth="3"/>
+          <path d="M1460 666 Q1520 647 1570 666 V724 H1460Z" fill="#9fb39b" strokeWidth="5"/>
+          <path d="M1475 724 V760 M1555 724 V760" fill="none" strokeWidth="9"/>
+          <path d="M1467 760 H1485 M1534 760 H1555" fill="none" strokeWidth="4"/>
+          <path d="M1488 566 Q1520 531 1542 566" fill="none" stroke="#879b83" strokeWidth="3"/>
         </g>
 
       </svg>

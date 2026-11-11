@@ -18,20 +18,7 @@ const lines: Record<string, string[]> = {
   mosquito: ['There is a mosquito in here!', 'I can hear it. I can FEEL it.', 'I am negotiating with an insect now.'],
   clock: ['Time is an illusion. Apparently.', 'Why is the clock doing that?', 'You have officially broken time.'],
 }
-const sceneHotspots = [
-  {id:'curtains',x:8,y:12,w:23,h:43,label:'Curtains'},
-  {id:'window',x:13,y:17,w:18,h:32,label:'Window'},
-  {id:'clock',x:45,y:19,w:8,h:12,label:'Wall clock'},
-  {id:'fan',x:43,y:1,w:15,h:20,label:'Ceiling fan'},
-  {id:'alarm',x:14,y:52,w:7,h:9,label:'Alarm clock'},
-  {id:'lamp',x:13,y:46,w:10,h:13,label:'Bedside lamp'},
-  {id:'bed',x:29,y:47,w:38,h:36,label:'Bed frame'},
-  {id:'pillow',x:32,y:55,w:18,h:11,label:'Pillows'},
-  {id:'blanket',x:29,y:64,w:38,h:15,label:'Blanket'},
-  {id:'phone',x:70,y:61,w:5,h:9,label:'Phone'},
-  {id:'door',x:78,y:39,w:9,h:33,label:'Wardrobe / door'},
-  {id:'mosquito',x:54,y:40,w:8,h:9,label:'Mosquito'},
-]
+
 export default function App() {
   const [intro,setIntro]=useState(true)
   const [mood,setMood]=useState(0)
@@ -345,11 +332,27 @@ export default function App() {
         </g>
 
       
+            <g className="bedroom-hitboxes" transform="translate(80 0)">
+              <rect className="svg-hotspot" x="96" y="115" width="130" height="395" rx="12" role="button" tabIndex="0" aria-label="Left curtain" onClick={()=>interact('curtains')}><title>Move curtains</title></rect>
+              <rect className="svg-hotspot" x="365" y="115" width="140" height="395" rx="12" role="button" tabIndex="0" aria-label="Right curtain" onClick={()=>interact('curtains')}><title>Move curtains</title></rect>
+              <rect className="svg-hotspot" x="145" y="155" width="305" height="300" rx="3" role="button" tabIndex="0" aria-label="Window" onClick={()=>interact('window')}><title>Open or close the window</title></rect>
+              <rect className="svg-hotspot" x="742" y="185" width="96" height="100" rx="48" role="button" tabIndex="0" aria-label="Wall clock" onClick={()=>interact('clock')}><title>Mess with the wall clock</title></rect>
+              <rect className="svg-hotspot" x="690" y="0" width="220" height="190" rx="25" role="button" tabIndex="0" aria-label="Ceiling fan" onClick={()=>interact('fan')}><title>Change fan speed</title></rect>
+              <rect className="svg-hotspot" x="205" y="455" width="110" height="95" rx="12" role="button" tabIndex="0" aria-label="Alarm clock" onClick={()=>interact('alarm')}><title>Trigger the alarm</title></rect>
+              <rect className="svg-hotspot" x="240" y="385" width="85" height="135" rx="12" role="button" tabIndex="0" aria-label="Left bedside lamp" onClick={()=>interact('lamp')}><title>Toggle the bedside lamp</title></rect>
+              <rect className="svg-hotspot" x="1110" y="385" width="85" height="135" rx="12" role="button" tabIndex="0" aria-label="Right bedside lamp" onClick={()=>interact('lamp')}><title>Toggle the bedside lamp</title></rect>
+              <rect className="svg-hotspot" x="385" y="585" width="715" height="225" rx="18" role="button" tabIndex="0" aria-label="Bed frame" onClick={()=>interact('bed')}><title>Shake the bed</title></rect>
+              <rect className="svg-hotspot" x="465" y="475" width="365" height="120" rx="28" role="button" tabIndex="0" aria-label="Pillows" onClick={()=>interact('pillow')}><title>Steal the pillows</title></rect>
+              <rect className="svg-hotspot" x="390" y="575" width="710" height="165" rx="18" role="button" tabIndex="0" aria-label="Blanket" onClick={()=>interact('blanket')}><title>Pull the blanket away</title></rect>
+              <rect className="svg-hotspot" x="1135" y="560" width="48" height="75" rx="8" role="button" tabIndex="0" aria-label="Phone" onClick={()=>interact('phone')}><title>Make the phone ring</title></rect>
+              <rect className="svg-hotspot" x="1205" y="330" width="175" height="320" rx="12" role="button" tabIndex="0" aria-label="Bedroom wardrobe door" onClick={()=>interact('door')}><title>Knock on the door</title></rect>
+              <ellipse className="svg-hotspot" cx="910" cy="390" rx="27" ry="24" role="button" tabIndex="0" aria-label="Mosquito" onClick={()=>interact('mosquito')}><title>Swat the mosquito</title></ellipse>
+            </g>
             <g className="stickman-anchor" transform="translate(250 175)">
               <Stickman mood={mood} awake={awake} reaction={pose} cursorNear={cursorNear} pose={pose}/>
             </g>
           </svg>
-          {sceneHotspots.map(h=><button key={h.id} className={`restored-hotspot ${showHints?'hints-on':''}`} style={{left:`${h.x}%`,top:`${h.y}%`,width:`${h.w}%`,height:`${h.h}%`}} onClick={()=>interact(h.id)} aria-label={h.label}><span>{h.label}</span></button>)}
+          
           {dialogue&&<div className="restored-dialogue">{dialogue}</div>}
           <div className="restored-caption">LIFE.EXE · {moodName}</div>
           <button className="restored-disturb" onClick={randomDisturb}><Sparkles size={14}/> DISTURB HIM</button>

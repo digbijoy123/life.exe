@@ -1,7 +1,7 @@
 export default function App() {
   return (
     <main className="environment-stage" aria-label="Bedroom environment design preview">
-      <svg className="bedroom-environment" viewBox="0 0 1800 900" role="img" aria-label="A carefully composed hand-drawn bedroom in white with restrained sage and warm neutral accents">
+      <svg className="bedroom-environment" viewBox="0 0 1600 900" role="img" aria-label="A carefully composed hand-drawn bedroom in white with restrained sage and warm neutral accents">
         <defs>
           <linearGradient id="daylight" x2="0" y2="1"><stop stopColor="#dcecf1"/><stop offset="1" stopColor="#f7faf7"/></linearGradient>
           <linearGradient id="wallwash" x2="0" y2="1"><stop stopColor="#fff"/><stop offset="1" stopColor="#faf9f6"/></linearGradient>
@@ -11,20 +11,32 @@ export default function App() {
           <pattern id="floorboards" width="240" height="82" patternUnits="userSpaceOnUse"><path d="M0 2 H240 M0 80 H240 M120 2 V80 M0 41 H120 M120 24 H240" fill="none" stroke="#8d8171" strokeWidth="1.2" opacity=".15"/><path d="M18 22 q24 -7 48 0 M148 62 q28 -8 54 0" fill="none" stroke="#8d8171" strokeWidth="1" opacity=".1"/></pattern>
           <filter id="roomshadow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="12"/></filter>
         </defs>
-        <g transform="translate(180 0)">
+        
 
         {/* Wall and floor establish a clear room horizon */}
-        <rect width="1440" height="900" fill="#fff"/>
-        <path d="M0 0 H1440 V625 Q1080 618 720 625 T0 625Z" fill="url(#wallwash)" stroke="#171717" strokeWidth="3"/>
-        <path d="M0 0 H1440 V625 H0Z" fill="url(#wallpaper)"/>
-        <path d="M0 625 Q360 619 720 625 T1440 625 V900 H0Z" fill="url(#floorwash)" stroke="#171717" strokeWidth="3"/>
-        <path d="M0 640 Q360 634 720 640 T1440 640" fill="none" stroke="#171717" strokeWidth="2"/>
-        <path d="M0 625 H1440 V900 H0Z" fill="url(#floorboards)" opacity=".8"/>
+        <rect width="1600" height="900" fill="#fff"/>
+        <path d="M0 0 H1600 V625 Q1200 618 800 625 T0 625Z" fill="url(#wallwash)" stroke="#171717" strokeWidth="3"/>
+        <path d="M0 0 H1600 V625 H0Z" fill="url(#wallpaper)"/>
+        <path d="M0 625 Q400 619 800 625 T1600 625 V900 H0Z" fill="url(#floorwash)" stroke="#171717" strokeWidth="3"/>
+        <path d="M0 640 Q400 634 800 640 T1600 640" fill="none" stroke="#171717" strokeWidth="2"/>
+        <path d="M0 625 H1600 V900 H0Z" fill="url(#floorboards)" opacity=".8"/>
         <g fill="none" stroke="#8c8174" strokeWidth="1.5" opacity=".2">
-          <path d="M0 720 Q360 710 720 720 T1440 718 M0 810 Q360 800 720 810 T1440 808"/>
+          <path d="M0 720 Q360 710 720 720 T1600 718 M0 810 Q360 800 720 810 T1600 808"/>
           <path d="M250 640 L290 900 M570 640 L610 900 M890 640 L930 900 M1210 640 L1250 900"/>
         </g>
 
+
+        <rect x="0" y="0" width="1600" height="900" fill="none" stroke="#171717" strokeWidth="5"/>
+        <path d="M0 42 H1600 M0 55 H1600" fill="none" stroke="#d9d5ce" strokeWidth="2"/>
+        <path d="M0 625 Q400 619 800 625 T1600 625" fill="none" stroke="#171717" strokeWidth="4"/>
+        <path d="M0 637 H1600" fill="none" stroke="#c7b9a7" strokeWidth="7"/>
+        <path d="M0 647 H1600" fill="none" stroke="#fff" strokeWidth="3"/>
+        <path d="M0 0 V900 M1600 0 V900" fill="none" stroke="#171717" strokeWidth="5"/>
+        <g fill="none" stroke="#8c8174" strokeWidth="1.5" opacity=".18">
+          <path d="M0 700 L1600 700 M0 790 L1600 790 M0 870 L1600 870"/>
+          <path d="M120 648 L70 900 M390 648 L360 900 M680 648 L660 900 M950 648 L960 900 M1220 648 L1260 900 M1480 648 L1540 900"/>
+        </g>
+        <g transform="translate(80 0)">
         {/* Window, view and curtains */}
         <g className="window" stroke="#171717" strokeLinejoin="round">
           <rect x="128" y="142" width="342" height="330" rx="3" fill="#fff" strokeWidth="8"/>
@@ -145,21 +157,24 @@ export default function App() {
         <path d="M0 625 Q360 619 720 625 T1440 625" fill="none" stroke="#171717" strokeWidth="4"/>
         <path d="M0 633 Q360 627 720 633 T1440 633" fill="none" stroke="#c6beb2" strokeWidth="2"/>
         </g>
-        {/* Wide-angle room extensions: a low console on the left and a reading chair on the right */}
+
+        {/* Side furnishings remain inside the room architecture */}
         <g className="wide-angle-furnishings" stroke="#171717" strokeLinejoin="round">
-          <path d="M22 568 H145 V652 H22Z" fill="#c9a77e" strokeWidth="4"/>
-          <path d="M30 578 H137 V630 H30Z" fill="#ead8bd" strokeWidth="2"/>
-          <path d="M38 588 H129 M38 599 H129" fill="none" stroke="#9e7957" strokeWidth="2"/>
-          <path d="M34 652 V672 M132 652 V672" fill="none" strokeWidth="7"/>
-          <path d="M55 565 Q50 543 69 532 Q88 544 82 565Z" fill="#d5b28b" strokeWidth="3"/>
-          <path d="M68 532 Q65 511 78 499 Q91 514 82 535" fill="#9fb79d" strokeWidth="2"/>
-          <path d="M1645 610 Q1645 575 1680 568 Q1720 560 1740 592 L1740 696 H1645Z" fill="#b7c6b5" strokeWidth="5"/>
-          <path d="M1660 606 Q1660 586 1687 584 Q1717 581 1725 607 V668 H1660Z" fill="#dbe4d8" strokeWidth="3"/>
-          <path d="M1645 670 Q1690 650 1740 670 V730 H1645Z" fill="#a8b99f" strokeWidth="5"/>
-          <path d="M1658 730 V765 M1727 730 V765" fill="none" strokeWidth="9"/>
-          <path d="M1650 765 H1667 M1718 765 H1735" fill="none" strokeWidth="4"/>
-          <path d="M1668 568 Q1690 535 1718 568" fill="none" stroke="#8e9e88" strokeWidth="3"/>
+          <path d="M18 565 Q18 552 32 552 H132 V650 H18Z" fill="#bd9168" strokeWidth="5"/>
+          <path d="M29 566 H121 V624 H29Z" fill="#e8d2b5" strokeWidth="2"/>
+          <path d="M37 580 H112 M37 592 H112" fill="none" stroke="#9b7655" strokeWidth="2"/>
+          <path d="M30 650 V674 M120 650 V674" fill="none" strokeWidth="8"/>
+          <path d="M145 645 H205 L198 704 H153Z" fill="#b98e68" strokeWidth="4"/>
+          <path d="M174 646 Q140 590 126 605 Q131 630 174 646Z M176 645 Q188 579 214 586 Q220 616 176 645Z M174 645 Q160 606 176 574 Q197 591 174 645Z" fill="#83a783" strokeWidth="3"/>
+          <path d="M174 645 V594 M172 630 L140 610 M178 620 L207 593" fill="none" strokeWidth="2"/>
+          <path d="M1295 612 Q1295 575 1330 566 Q1373 557 1393 592 L1393 696 H1295Z" fill="#b8c8b6" strokeWidth="5"/>
+          <path d="M1310 608 Q1310 585 1337 582 Q1370 580 1378 608 V665 H1310Z" fill="#e0e8dc" strokeWidth="3"/>
+          <path d="M1295 666 Q1345 647 1393 666 V724 H1295Z" fill="#9fb39b" strokeWidth="5"/>
+          <path d="M1310 724 V760 M1378 724 V760" fill="none" strokeWidth="9"/>
+          <path d="M1302 760 H1320 M1369 760 H1387" fill="none" strokeWidth="4"/>
+          <path d="M1318 566 Q1345 531 1372 566" fill="none" stroke="#879b83" strokeWidth="3"/>
         </g>
+
       </svg>
       <div className="environment-caption">BEDROOM · ENVIRONMENT DESIGN</div>
     </main>

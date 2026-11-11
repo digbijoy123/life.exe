@@ -58,3 +58,71 @@ body{background:#fff!important}
 .environment-stage{position:relative;width:100%;height:100%;height:100dvh;overflow:hidden;background:#fff}
 .bedroom-environment{display:block;width:100%;height:100%;object-fit:cover;object-position:center;background:#fff}
 .environment-caption{position:absolute;left:22px;bottom:18px;padding:8px 11px;border:1px solid #111;background:#fff;color:#111;font:9px 'DM Mono',monospace;letter-spacing:1.4px}
+
+
+/* Restored interactive LIFE.exe experience */
+.restored-app{position:relative;width:100%;height:100%;height:100dvh;overflow:hidden;background:#fff;color:#111;font-family:'DM Sans',sans-serif}
+.restored-world{position:relative;width:100%;height:100%;height:100dvh;overflow:hidden}
+.restored-scene{position:relative;width:100%;height:100%;height:100dvh;overflow:hidden;background:#fff;isolation:isolate}
+.restored-scene .bedroom-environment{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
+.restored-scene .stickman-anchor{pointer-events:none}
+.restored-scene .fan-blades{transform-box:fill-box;transform-origin:0% 0%}
+.restored-scene .curtain-left,.restored-scene .curtain-right{transform-box:fill-box;transform-origin:top center}
+.restored-scene .window,.restored-scene .wardrobe,.restored-scene .bed,.restored-scene .bed-cover,.restored-scene .pillows,.restored-scene .plant,.restored-scene .rug{transform-box:fill-box;transform-origin:center}
+.restored-scene[data-window="true"] .window{filter:drop-shadow(0 0 9px #b9d9e8)}
+.restored-scene[data-lamp="true"] .left-lamp,.restored-scene[data-lamp="true"] .right-lamp{filter:drop-shadow(0 0 13px #f0c46d)}
+.restored-scene[data-curtains="true"] .curtain-left{transform:translateX(-18px)}
+.restored-scene[data-curtains="true"] .curtain-right{transform:translateX(18px)}
+.restored-scene[data-blanket="true"] .bed-cover{transform:translateY(28px)}
+.restored-scene[data-pillow="true"] .pillows{transform:translate(-22px,-8px) rotate(-3deg)}
+.restored-scene[data-fan="0"] .fan-blades{animation-play-state:paused}
+.restored-scene[data-fan="1"] .fan-blades{animation:fan-spin-svg 2.8s linear infinite}
+.restored-scene[data-fan="2"] .fan-blades{animation:fan-spin-svg 1.6s linear infinite}
+.restored-scene[data-fan="3"] .fan-blades{animation:fan-spin-svg .85s linear infinite}
+@keyframes fan-spin-svg{to{transform:rotate(360deg)}}
+.restored-hotspot{position:absolute;z-index:5;border:1px solid transparent;background:transparent;border-radius:8px;padding:0;cursor:pointer}
+.restored-hotspot:focus-visible{outline:2px solid #111;outline-offset:2px}
+.restored-hotspot:after{content:'';position:absolute;left:50%;top:50%;width:8px;height:8px;border:1px solid white;border-radius:50%;background:#111;box-shadow:0 0 0 2px #111;opacity:.45;transform:translate(-50%,-50%);transition:.2s}
+.restored-hotspot span{position:absolute;left:50%;top:-22px;transform:translate(-50%,4px);padding:4px 7px;background:#fff;border:1px solid #111;box-shadow:2px 2px 0 #111;color:#111;font:8px 'DM Mono';white-space:nowrap;opacity:0;pointer-events:none;transition:.18s}
+.restored-hotspot:hover,.restored-hotspot:focus-visible{border:1.5px dashed #111;background:#11108}
+.restored-hotspot:hover:after,.restored-hotspot:focus-visible:after{opacity:0}
+.restored-hotspot:hover span,.restored-hotspot:focus-visible span{opacity:1;transform:translate(-50%,0)}
+.restored-hotspot.hints-on:before{content:'';position:absolute;inset:0;border:1px dashed #111;opacity:.04;border-radius:8px}
+.restored-dialogue{position:absolute;z-index:7;left:50%;top:39%;transform:translate(-50%,-100%);max-width:min(340px,70vw);padding:11px 17px;background:#fff;border:2px solid #111;border-radius:16px;box-shadow:3px 4px 0 #111;color:#111;font:18px 'Patrick Hand',cursive;text-align:center;animation:restored-pop .24s ease-out}
+@keyframes restored-pop{from{opacity:0;translate:0 8px}to{opacity:1;translate:0 0}}
+.restored-caption{position:absolute;left:22px;bottom:18px;z-index:6;padding:8px 11px;background:#fff;border:1px solid #111;color:#111;font:9px 'DM Mono';letter-spacing:1.2px}
+.restored-disturb{position:absolute;right:20px;bottom:18px;z-index:8;display:flex;align-items:center;gap:8px;padding:11px 14px;border:1.5px solid #111;background:#fff;box-shadow:3px 3px 0 #111;color:#111;font:9px 'DM Mono';letter-spacing:.8px}
+.restored-disturb:hover{background:#111;color:#fff}
+.world-location{z-index:8;background:#fff;color:#111;border:1.5px solid #111;box-shadow:2px 2px 0 #111}
+.world-controls{z-index:8}
+.world-control{background:#fff;color:#111;border:1.5px solid #111;box-shadow:2px 2px 0 #111}
+.world-control:hover,.world-control.control-active{background:#111;color:#fff;border-color:#111}
+.restored-places{position:absolute;z-index:12;top:64px;left:18px;width:min(350px,calc(100% - 36px));padding:14px;background:#fff;border:1.5px solid #111;box-shadow:4px 4px 0 #111}
+.restored-places-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;font:10px 'DM Mono';letter-spacing:1px}
+.restored-places-head button{width:28px;height:28px;border:1px solid #111;background:#fff;display:grid;place-items:center}
+.restored-places>button{display:grid;grid-template-columns:28px 1fr;grid-template-rows:auto auto;gap:3px 8px;width:100%;padding:9px;border:1px solid #ddd;background:#fff;color:#111;text-align:left}
+.restored-places>button+button{margin-top:5px}
+.restored-places>button span{grid-row:1/3;font-size:20px}
+.restored-places>button b{font-size:11px}
+.restored-places>button small{font:8px 'DM Mono';color:#666}
+.restored-places>button.selected{border:1.5px solid #111;background:#f1f1ed}
+.restored-places>button:disabled{opacity:.45;cursor:not-allowed}
+.restored-status{position:absolute;z-index:8;left:50%;bottom:18px;transform:translateX(-50%);display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;width:min(620px,58vw);padding:10px 14px;background:#ffffffed;border:1px solid #111;box-shadow:3px 3px 0 #111}
+.restored-status>div{display:flex;flex-direction:column;gap:4px}
+.restored-status small{font:8px 'DM Mono';letter-spacing:.7px;color:#555}
+.restored-status b{font:11px 'DM Mono';color:#111}
+.restored-status i{display:block;height:4px;background:#ddd;overflow:hidden}
+.restored-status i span{display:block;height:100%;background:#8aa88d;transition:width .35s}
+.restored-note{grid-column:1/-1;font:10px 'Patrick Hand';color:#333}
+.intro-overlay{z-index:30}
+@media(max-width:700px){
+ .restored-status{left:10px;right:10px;bottom:60px;transform:none;width:auto;gap:8px;padding:8px}
+ .restored-status small{font-size:7px}.restored-status b{font-size:9px}
+ .restored-caption{left:10px;bottom:10px;font-size:7px}
+ .restored-disturb{right:10px;bottom:10px;padding:9px;font-size:8px}
+ .world-location{left:10px;top:10px}.world-controls{right:10px;top:10px}
+ .restored-dialogue{top:34%;font-size:15px}
+}
+@media(prefers-reduced-motion:reduce){
+ .restored-app *, .restored-app *:before,.restored-app *:after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+}

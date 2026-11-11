@@ -60,16 +60,20 @@ export default function App() {
 
   useEffect(()=>{
     const ctx=gsap.context(()=>{
-      gsap.to('.fan-blades',{rotation:360,transformOrigin:'0px 0px',duration:fanSpeed===0?0:Math.max(.35,2.8/fanSpeed),repeat:-1,ease:'none',paused:fanSpeed===0})
       gsap.to('.left-lamp,.right-lamp',{y:-1.5,duration:2.8,repeat:-1,yoyo:true,ease:'sine.inOut',stagger:.35})
       gsap.to('.curtain-left',{x:-3,duration:3.2,repeat:-1,yoyo:true,ease:'sine.inOut'})
       gsap.to('.curtain-right',{x:3,duration:3.5,repeat:-1,yoyo:true,ease:'sine.inOut'})
       gsap.to('.plant',{rotation:1.4,transformOrigin:'50% 100%',duration:2.5,repeat:-1,yoyo:true,ease:'sine.inOut'})
       gsap.to('.wall-clock,.alarm-clock',{rotation:1.2,transformOrigin:'50% 50%',duration:2.2,repeat:-1,yoyo:true,ease:'sine.inOut'})
       gsap.to('.wall-art',{y:-1.5,duration:4,repeat:-1,yoyo:true,ease:'sine.inOut'})
+      gsap.to('.window',{y:-.8,duration:5,repeat:-1,yoyo:true,ease:'sine.inOut'})
+      gsap.to('.wardrobe',{rotation:.12,transformOrigin:'50% 100%',duration:3.5,repeat:-1,yoyo:true,ease:'sine.inOut'})
+      gsap.to('.bedside-left,.bedside-right',{y:-.7,duration:3.8,repeat:-1,yoyo:true,ease:'sine.inOut',stagger:.4})
+      gsap.to('.ceiling-fan',{y:1,duration:3.2,repeat:-1,yoyo:true,ease:'sine.inOut'})
       gsap.to('.phone-object',{y:-1,duration:1.5,repeat:-1,yoyo:true,ease:'sine.inOut'})
       gsap.to('.mosquito-object',{x:12,y:-9,duration:.9,repeat:-1,yoyo:true,ease:'sine.inOut'})
       gsap.to('.rug',{y:1,duration:4,repeat:-1,yoyo:true,ease:'sine.inOut'})
+      gsap.to('.alarm-clock',{rotation:.5,transformOrigin:'50% 50%',duration:2.6,repeat:-1,yoyo:true,ease:'sine.inOut'})
       gsap.to('.bed-cover',{y:1.2,duration:3.4,repeat:-1,yoyo:true,ease:'sine.inOut'})
       gsap.to('.pillows',{y:1,duration:3.1,repeat:-1,yoyo:true,ease:'sine.inOut'})
       gsap.to('.wardrobe',{x:0,duration:3,repeat:-1,yoyo:true,ease:'sine.inOut'})

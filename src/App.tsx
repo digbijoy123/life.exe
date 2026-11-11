@@ -148,21 +148,14 @@ export default function App() {
   }
 
   return <main className="app-shell">
-    <header className="topbar">
-      <a className="brand" href="#" onClick={e => e.preventDefault()}><span className="brand-mark">L.</span><span>LIFE<span className="brand-dot">.</span>exe</span></a>
-      <div className="top-center"><span className="live-dot" /> SIMULATION RUNNING <span className="top-divider">/</span> DAY 01</div>
-      <div className="top-actions">
-        <button className="icon-button" title={soundOn ? 'Mute sounds' : 'Sound is off'} onClick={() => setSoundOn(v => !v)}><Volume2 size={17} /><span className={soundOn ? 'sound-on' : ''} /></button>
-        <button className="icon-button" title="Toggle interaction hints" onClick={() => setShowHints(v => !v)}><MousePointer2 size={17} /></button>
-        <button className="icon-button" title="Reset this day" onClick={resetDay}><RotateCcw size={16} /></button>
-      </div>
-    </header>
-
-    <section className="intro-strip"><div><span className="eyebrow">A VERY SMALL WORLD</span><h1>He has a life. <em>You have other plans.</em></h1><p>He just wants a quiet night. You have a mouse. We all know how this ends.</p></div><div className="intro-stats"><span><b>{interactions.toString().padStart(2, '0')}</b> DISTURBANCES</span><span><b>{sceneLabel.toUpperCase()}</b> CURRENT LOCATION</span></div></section>
-
-    <section className="game-frame">
-      <div className="scene-toolbar"><div className="location-label"><Moon size={14} /><span>LOCATION / {sceneLabel.toUpperCase()}</span><span className="scene-tag">FIRST NIGHT</span></div><button className="places-button" onClick={() => setShowPlaces(v => !v)}><DoorOpen size={15} /> EXPLORE PLACES <ChevronDown size={13} /></button></div>
+    {/* Full-screen scene: only essential controls float over the world. */}
       <div ref={sceneRef} className={`scene scene-${scene} ${active.lamp ? 'lamp-on' : ''} ${active.curtains ? 'curtains-open' : ''}`}>
+        <div className="world-location"> <Moon size={13}/> <span>{sceneLabel.toUpperCase()}</span> <button className="world-places" onClick={() => setShowPlaces(v => !v)} aria-label="Explore places"><DoorOpen size={15}/></button></div>
+        <div className="world-controls">
+          <button className="world-control" title={soundOn ? 'Mute sounds' : 'Enable sounds'} onClick={() => setSoundOn(v => !v)}><Volume2 size={16}/></button>
+          <button className={`world-control ${showHints ? 'control-active' : ''}`} title="Toggle interaction hints" onClick={() => setShowHints(v => !v)}><MousePointer2 size={16}/></button>
+          <button className="world-control" title="Reset this day" onClick={resetDay}><RotateCcw size={15}/></button>
+        </div>
         <svg className="scene-art" viewBox="0 0 1100 620" role="img" aria-label="A hand-drawn bedroom with a sleeping stickman and interactive objects">
           <defs>
             <linearGradient id="wall" x2="0" y2="1"><stop stopColor="#d9c9b7"/><stop offset="1" stopColor="#c7b39f"/></linearGradient>
@@ -197,8 +190,6 @@ export default function App() {
         {isNight && <div className="night-overlay" />}
         <div className="scene-grain" />
         <div className="scene-dialogue"><span className="dialogue-tail" /><span>{dialogue}</span></div>
-        <div className="scene-caption"><span className="caption-dot" /> {awake ? 'HE IS AWAKE' : 'SLEEPING PEACEFULLY'} <span>·</span> {moodName.toUpperCase()}</div>
-        <div className="hint-toggle"><span className="hint-pulse" /> {showHints ? 'HOVER TO DISCOVER' : 'HINTS HIDDEN'}</div>
 
         {bedroomObjects.map((obj, index) => {
           const positions: Record<ObjectId, { left: string; top: string; width: string; height: string }> = {
@@ -220,19 +211,10 @@ export default function App() {
             <span className="hotspot-ring" /><span className="hotspot-label">{obj.name}</span>{hovered === obj.id && <span className="tooltip"><b>{obj.name}</b><small>{obj.hint}</small><i>CLICK TO MESS WITH HIM ↗</i></span>}
           </button>
         })}
+        <button className="world-disturb" onClick={() => interact(bedroomObjects[Math.floor(Math.random() * bedroomObjects.length)].id)}><Sparkles size={14}/> DISTURB HIM</button>
         {showPlaces && <div className="places-panel"><div className="places-head"><div><small>CHOOSE YOUR NEXT VICTIM</small><strong>Where is he now?</strong></div><button onClick={() => setShowPlaces(false)} aria-label="Close places"><X size={17}/></button></div><div className="places-grid">{scenes.map(s => <button key={s.id} disabled={!s.available} className={scene === s.id ? 'selected' : ''} onClick={() => changeScene(s.id)}><span>{s.icon}</span><b>{s.name}</b><small>{s.available ? s.subtitle : 'COMING SOON'}</small></button>)}</div><p>More places are being prepared. He has no idea.</p></div>}
       </div>
-      <div className="scene-footer"><div className="legend"><span><i className="legend-ring" /> INTERACTIVE OBJECT</span><span><i className="legend-dot" /> CHARACTER</span></div><button className="next-button" onClick={() => interact(bedroomObjects[Math.floor(Math.random() * bedroomObjects.length)].id)}><Sparkles size={14}/> RANDOM DISTURBANCE <ArrowRight size={14}/></button></div>
     </section>
-
-    <section className="status-panel">
-      <div className="status-title"><span>SUBJECT STATUS</span><span className="status-live">● LIVE</span></div>
-      <div className="meter"><div className="meter-label"><span>MOOD</span><b>{moodName.toUpperCase()}</b></div><div className="meter-track"><i className={`mood-fill ${moodName}`} style={{ width: `${mood}%` }} /></div></div>
-      <div className="meter"><div className="meter-label"><span>ENERGY</span><b>{Math.round(energy)}%</b></div><div className="meter-track"><i className="energy-fill" style={{ width: `${energy}%` }} /></div></div>
-      <div className="status-note"><span className="status-avatar">:) </span><span>{mood > 82 ? 'Subject is considering revenge.' : mood > 55 ? 'Subject is visibly losing patience.' : mood > 20 ? 'Subject suspects foul play.' : 'Subject believes everything is normal.'}</span></div>
-    </section>
-
-    <footer className="footer"><span>MADE FOR ABSOLUTELY NO GOOD REASON.</span><span>LIFE.exe <b>v0.1.0</b> <span className="footer-sep">/</span> SUBJECT #001</span></footer>
 
     {intro && <div className="intro-overlay"><div className="intro-card"><div className="intro-kicker"><span className="brand-mark">L.</span> A TINY LIFE SIMULATOR</div><div className="intro-art"><div className="intro-moon"/><div className="intro-bed"/><div className="intro-stick"><span/><i/><b/></div><span className="intro-zzz">Z z z</span></div><p className="eyebrow">SUBJECT #001 / CURRENTLY UNWARE</p><h2>He has a life.<br/><em>You have other plans.</em></h2><p className="intro-copy">Meet your new favourite human. He has dreams, a routine, and absolutely no idea what's coming. He just wants to live peacefully.</p><p className="intro-punch">Unfortunately, you've arrived.</p><div className="intro-rules"><span>01 <b>Explore</b> his little world</span><span>02 <b>Find</b> things you can interact with</span><span>03 <b>Ruin</b> his perfectly normal day</span></div><button className="begin-button" onClick={begin}>LET THE CHAOS BEGIN <ArrowRight size={17}/></button><small className="intro-foot">NO STICKMEN WERE CONSULTED IN THE MAKING OF THIS EXPERIENCE.</small></div></div>}
   </main>
